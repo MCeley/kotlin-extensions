@@ -73,16 +73,16 @@ class ExtensionTest {
         assertEquals(expected, testValue)
 
         // Test with ranges
-        testValue = "a".utf16SafeSubstring(0..1)
+        testValue = "a".utf16SafeSubstring(0..0)
         assertEquals(expected, testValue)
 
-        testValue = "ab".utf16SafeSubstring(0..1)
+        testValue = "ab".utf16SafeSubstring(0..0)
         assertEquals(expected, testValue)
 
-        testValue = "a\uD83D\uDC68".utf16SafeSubstring(0..2, includeSurrogateCharEnd = true)
+        testValue = "a\uD83D\uDC68".utf16SafeSubstring(0..1, includeSurrogateCharEnd = true)
         assertNotEquals(expected, testValue)
 
-        testValue = "a\uD83D\uDC68".utf16SafeSubstring(0..2, includeSurrogateCharEnd = false)
+        testValue = "a\uD83D\uDC68".utf16SafeSubstring(0..1, includeSurrogateCharEnd = false)
         assertEquals(expected, testValue)
     }
 
@@ -142,7 +142,7 @@ class ExtensionTest {
     fun testSubstringProperlyIncludesSurrogatePairsWithRange() {
         var expected = "a"
         var testValue = "\uD83D\uDC68a\uD83D\uDC68".utf16SafeSubstring(
-            1..4,
+            1..3,
             includeSurrogateCharStart = false,
             includeSurrogateCharEnd = false
         )
@@ -151,7 +151,7 @@ class ExtensionTest {
 
         expected = "\uD83D\uDC68a"
         testValue = "\uD83D\uDC68a\uD83D\uDC68".utf16SafeSubstring(
-            1..4,
+            1..3,
             includeSurrogateCharStart = true,
             includeSurrogateCharEnd = false
         )
@@ -159,7 +159,7 @@ class ExtensionTest {
 
         expected = "a\uD83D\uDC68"
         testValue = "\uD83D\uDC68a\uD83D\uDC68".utf16SafeSubstring(
-            1..4,
+            1..3,
             includeSurrogateCharStart = false,
             includeSurrogateCharEnd = true
         )
@@ -167,7 +167,7 @@ class ExtensionTest {
 
         expected = "\uD83D\uDC68a\uD83D\uDC68"
         testValue = "\uD83D\uDC68a\uD83D\uDC68".utf16SafeSubstring(
-            1..4,
+            1..3,
             includeSurrogateCharStart = true,
             includeSurrogateCharEnd = true
         )
@@ -197,5 +197,33 @@ class ExtensionTest {
     fun testSubstringGeneratesZeroLengthValueWithMatchingIndices() {
         assertEquals("", "a".utf16SafeSubstring(1, 1))
         assertEquals("", "Testing".utf16SafeSubstring(3, 3))
+    }
+
+    @Test
+    fun testSubstringFunctionsSameAsBuiltInSubstringWhenNoBoundariesHit() {
+        var expected = "a little string".substring(0, 1)
+        var testValue = "a little string".utf16SafeSubstring(0, 1)
+
+        assertEquals(expected, testValue)
+
+        expected = "a \uD83D\uDC68 string".substring(0, 6)
+        testValue = "a \uD83D\uDC68 string".utf16SafeSubstring(0, 6)
+
+        assertEquals(expected, testValue)
+
+        expected = "a \uD83D\uDC68 string".substring(0..5)
+        testValue = "a \uD83D\uDC68 string".utf16SafeSubstring(0..5)
+
+        assertEquals(expected, testValue)
+
+        expected = "a \uD83D\uDC68".substring(0, 4)
+        testValue = "a \uD83D\uDC68".utf16SafeSubstring(0,4)
+
+        assertEquals(expected, testValue)
+
+        expected = "a \uD83D\uDC68".substring(0..3)
+        testValue = "a \uD83D\uDC68".utf16SafeSubstring(0..3)
+
+        assertEquals(expected, testValue)
     }
 }

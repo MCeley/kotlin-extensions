@@ -43,7 +43,7 @@ fun String.utf16SafeSubstring(
 ) : String {
     return utf16SafeSubstring(
         range.first,
-        range.last,
+        range.last + 1,
         includeSurrogateCharStart,
         includeSurrogateCharEnd
     )
