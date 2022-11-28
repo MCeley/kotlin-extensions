@@ -1,5 +1,15 @@
 package com.michaelceley.android.extensions
 
+/**
+ * Truncates the given string value without breaking up UTF-16
+ * surrogate pairs. If truncated length falls in the middle of
+ * a surrogate pair, the entire pair is cut off.
+ *
+ * @param maxLength The max string length to truncate to.
+ *
+ * @return A [Pair] with the trimmed string value and a boolean indicating
+ *  whether or not the value was truncated.
+ */
 fun String.utf16TruncateLength(
     maxLength: Int
 ) : Pair<String, Boolean> {
@@ -25,6 +35,15 @@ fun String.utf16TruncateLength(
     return truncatedValue to true
 }
 
+/**
+ * Performs a substring operation on the given string. This version of
+ * substring will respect UTF-16 surrogate pairs that span multiple indices
+ * so that no garbage characters are left at the beginning or end of the string.
+ *
+ * @param startIndex The desired starting index.
+ * @param includeSurrogateCharStart Whether or not to include the full surrogate pair
+ *  in the resulting substring if the startIndex falls in the middle of the pair.
+ */
 fun String.utf16SafeSubstring(
     startIndex: Int,
     includeSurrogateCharStart: Boolean = true
@@ -36,6 +55,17 @@ fun String.utf16SafeSubstring(
     )
 }
 
+/**
+ * Performs a substring operation on the given string. This version of
+ * substring will respect UTF-16 surrogate pairs that span multiple indices
+ * so that no garbage characters are left at the beginning or end of the string.
+ *
+ * @param range The desired range of indices for the resulting string.
+ * @param includeSurrogateCharStart Whether or not to include the full surrogate pair
+ *  in the resulting substring if the startIndex falls in the middle of the pair.
+ * @param includeSurrogateCharEnd Whether or not to include the full surrogate pair
+ *  in the resulting substring if the endIndex falls in the middle of the pair.
+ */
 fun String.utf16SafeSubstring(
     range: IntRange,
     includeSurrogateCharStart: Boolean = true,
@@ -49,6 +79,18 @@ fun String.utf16SafeSubstring(
     )
 }
 
+/**
+ * Performs a substring operation on the given string. This version of
+ * substring will respect UTF-16 surrogate pairs that span multiple indices
+ * so that no garbage characters are left at the beginning or end of the string.
+ *
+ * @param startIndex The desired starting index.
+ * @param endIndex The desired ending index.
+ * @param includeSurrogateCharStart Whether or not to include the full surrogate pair
+ *  in the resulting substring if the startIndex falls in the middle of the pair.
+ * @param includeSurrogateCharEnd Whether or not to include the full surrogate pair
+ *  in the resulting substring if the endIndex falls in the middle of the pair.
+ */
 fun String.utf16SafeSubstring(
     startIndex: Int,
     endIndex: Int,
