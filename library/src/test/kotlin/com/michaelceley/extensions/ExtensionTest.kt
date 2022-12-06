@@ -1,8 +1,10 @@
-package com.michaelceley.android.extensions
+package com.michaelceley.extensions
 
-import org.junit.Test
+import org.junit.Assert.assertThrows
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
-import org.junit.Assert.*
 
 class ExtensionTest {
 
