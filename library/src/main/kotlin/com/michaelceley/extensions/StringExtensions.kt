@@ -1,4 +1,4 @@
-package com.michaelceley.android.extensions
+package com.michaelceley.extensions
 
 /**
  * Truncates the given string value without breaking up UTF-16
