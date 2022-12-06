@@ -5,6 +5,8 @@ package com.michaelceley.extensions
  * or equal to the specified length. Entries can either be removed from
  * the map if their key is too long or the key can be truncated.
  *
+ * WARNING: Truncating keys can cause key collisions and dropped values.
+ *
  * @param keyLength The max length of the entry key.
  * @param truncate Whether or not keys should be truncated. If not truncated,
  *  then entries with keys that exceed the keyLength will be removed.
